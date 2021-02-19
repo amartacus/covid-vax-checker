@@ -27,14 +27,11 @@ const parseResult = (result) => {
   console.log("-----------");
   console.log(new Date().toLocaleString());
   console.table(data);
-  const available_appt = data.filter((item) => item.totalAvailable > 0);
+  const available_appt = data.filter((item) => item.status === 'Available');
   const createTextBody = (data) => {
-    return `Vaccine appointment availability by location: ${data
-      .map((item) => `${item.city}: ${item.totalAvailable}`)
-      .join(
-        ", "
-      )}. Visit https://www.cvs.com/immunizations/covid-19-vaccine to book.
-    `;
+    const availableLocations = data.map((item) => item.city).join(", ");
+    return "Vaccine appointments are available at the following locations: " + availableLocations + "." + 
+    " Visit https://www.cvs.com/immunizations/covid-19-vaccine to book.";
   };
 
   if (available_appt.length > 0) {
